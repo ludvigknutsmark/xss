@@ -81,15 +81,20 @@ router.post('/addUser', function(req, res, next) {
 
 router.get('/search', function(req,res,next){
   if(req.session.key){
-    res.render('searchfield')
+    res.render('searchfield', {result: req.query.searchquery})
   }
   else{
     res.redirect('login')
   }
 });
 
-router.post('/searchdb', function(req,res,next){
-  res.render('searchfield', {result: req.body.searchquery})
+router.post('/search', function(req,res,next){
+  if(req.session.key){
+    res.redirect('/search?searchquery='+req.body.searchquery)
+  }
+  else{
+    res.redirect('login')
+  }
 });
 
 module.exports = router;
