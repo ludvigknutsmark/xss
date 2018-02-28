@@ -25,7 +25,7 @@ router.get('/login', function(req, res, next){
 
 router.post('/loginuser', function(req,res,next){
   var db = req.db;
-  var data = db.get('login');
+  var data = db.get('users');
   var username = req.body.username;
   var password = req.body.password
 
@@ -37,7 +37,7 @@ router.post('/loginuser', function(req,res,next){
         res.redirect('welcome?username='+result.username)
       }
       else{
-        res.redirect('login')
+        res.redirect('users')
       }
     }
   });
