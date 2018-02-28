@@ -25,7 +25,7 @@ router.get('/login', function(req, res, next){
 
 router.post('/loginuser', function(req,res,next){
   var db = req.db;
-  var data = db.get('login');
+  var data = db.get('users');
   var username = req.body.username;
   var password = req.body.password
 
@@ -34,6 +34,8 @@ router.post('/loginuser', function(req,res,next){
     if (err) throw err;
     else{
       if (result != null){
+        //Creates session
+        req.session.key=username;
         res.redirect('welcome?username='+result.username)
       }
       else{
@@ -43,11 +45,26 @@ router.post('/loginuser', function(req,res,next){
   });
 });
 
+router.get('/logout', function(req,res,next){
+  req.session.destroy(function(err){
+    if(err){
+      console.log(err)
+    }
+    else{
+      res.redirect('/')
+    }
+  });
+});
+
 router.get('/welcome', function(req,res,next){
-  var username = req.query.username;
-  /* Check if cookie for username or user exist */
-  
-  res.render('welcome', {username: username})
+  //Check if session exists.
+  if(req.session.key){
+    var username = req.query.username;
+    res.render('welcome', {username: username})
+  } 
+  else{
+    res.redirect('login')
+  }
 });
 
 router.get('/register', function(req, res, next) {
