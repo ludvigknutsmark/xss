@@ -3,21 +3,7 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
-
-router.get('/test', function(req,res,next){
-  res.render('test', { data: req.query.name});
-});
-
-router.get('/dbget', function(req,res,next){
-  var db = req.db;
-  var data = db.get('test');
-  data.findOne({}, function(err,result){
-    if (err) throw err;
-    db.close();
-    res.render('dbtest', { title: result.name})
-  });
+  res.render('login', {});
 });
 
 router.get('/dbinsert', function(req,res,next){
@@ -86,13 +72,5 @@ router.get('/register', function(req, res, next) {
   //});
   db.close();
 });
-
-/*router.get('/ssti', function(req, res, next) {
-  //var out  = render('ssti', { data: req.query.name});
-  //console.log(out)
-  console.log(req.query.name)
-  res.render('ssti', { data: req.query.name});
-});
-*/
 
 module.exports = router;
