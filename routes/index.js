@@ -9,19 +9,6 @@ router.get('/', function(req, res, next) {
   res.render('login', {});
 });
 
-router.get('/dbinsert', function(req,res,next){
-  var db = req.db;
-  var data = db.get('users');
-  var userName = req.query.name;
-  data.insert({"name" : userName}, function(err, doc){
-    db.close();
-    if (err) throw err;
-    else{
-      res.redirect('dbget')
-    }
-  });
-});
-
 router.get('/login', function(req, res, next){
   if(req.session.key){
     res.redirect('welcome')
@@ -42,12 +29,11 @@ router.post('/loginuser', function(req,res,next){
     if (err) throw err;
     else{
       if (result != null){
-        //Creates session
-        req.session.key=username;
+        req.session.key=username;     
         res.redirect('welcome')
       }
       else{
-        res.redirect('users')
+        res.redirect('login')
       }
     }
   });
@@ -65,7 +51,6 @@ router.get('/logout', function(req,res,next){
 });
 
 router.get('/welcome', function(req,res,next){
-  //Check if session exists.
   if(req.session.key){
     res.render('welcome', {username: req.session.key})
   } 
