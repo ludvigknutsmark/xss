@@ -1,0 +1,18 @@
+extends layout
+
+block content
+
+  p !{title}
+  
+  
+  
+  //XSS - eftersom data.name inte är escapad
+  //script window.__PRELOADED_STATE__ = #{data.name[0]}
+  //script #{data.name[0]}
+  
+  //script window.__PRELOADED_STATE__ = !{title}
+  //h1 Welcome !{title}
+  //script "Window location is: "  = !{title}
+  //p !{data}
+
+      
