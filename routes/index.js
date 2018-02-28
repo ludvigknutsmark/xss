@@ -58,9 +58,8 @@ router.post('/addUser', function(req, res, next) {
 	var db = req.db;
 	var collection = db.get('users');
 	var userName = req.body.name;
-	var password = req.body.pw;
-	db.close();
-	data.insert({"username" : userName, "password" : password}, function(err, doc){
+	var password = req.body.password;
+	collection.insert({"username" : userName, "password" : password}, function(err, doc){
 		db.close();
 		if (err) throw err;
 		else{
