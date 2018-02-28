@@ -64,27 +64,23 @@ router.get('/welcome', function(req,res,next){
   res.render('welcome', {username: username})
 });
 
-router.post('/register', function(req, res, next) {
-  //var out  = render('ssti', { data: req.query.name});
-  //console.log(out)
-  //console.log(req.query.name)
-  res.render('register');
-  //res.render('register', { data: req.query.name});
-  var db = req.db;
-  //var data = db.get('test');
-  //var userName = req.query.name;
-  //var password = req.query.pw;
-  var userName = req.body.name;
-  var password = req.body.pw;
-  console.log(userName);
-  //data.insert({"name" : userName}, function(err, doc){
-  //  db.close();
-  //  if (err) throw err;
-  //  else{
-  //    res.redirect('dbget')
-  //  }
-  //});
-  db.close();
+router.get('/register', function(req, res, next) {
+	res.render('register');
+});
+
+router.post('/addUser', function(req, res, next) {
+	var db = req.db;
+	var collection = db.get('users');
+	var userName = req.body.name;
+	var password = req.body.pw;
+	db.close();
+	data.insert({"username" : userName, "password" : password}, function(err, doc){
+		db.close();
+		if (err) throw err;
+		else{
+      			res.redirect('login');
+   		 }
+	});
 });
 
 /*router.get('/ssti', function(req, res, next) {
