@@ -20,7 +20,12 @@ router.get('/dbinsert', function(req,res,next){
 });
 
 router.get('/login', function(req, res, next){
-  res.render('login', {})
+  if(req.session.key){
+    res.redirect('welcome')
+  }
+  else{
+    res.render('login', {})
+  }
 });
 
 router.post('/loginuser', function(req,res,next){
@@ -36,7 +41,7 @@ router.post('/loginuser', function(req,res,next){
       if (result != null){
         //Creates session
         req.session.key=username;
-        res.redirect('welcome?username='+result.username)
+        res.redirect('welcome')
       }
       else{
         res.redirect('login')
@@ -59,8 +64,7 @@ router.get('/logout', function(req,res,next){
 router.get('/welcome', function(req,res,next){
   //Check if session exists.
   if(req.session.key){
-    var username = req.query.username;
-    res.render('welcome', {username: username})
+    res.render('welcome', {username: req.session.key})
   } 
   else{
     res.redirect('login')
