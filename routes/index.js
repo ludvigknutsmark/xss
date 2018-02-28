@@ -64,7 +64,7 @@ router.get('/welcome', function(req,res,next){
   res.render('welcome', {username: username})
 });
 
-router.get('/register', function(req, res, next) {
+router.post('/register', function(req, res, next) {
   //var out  = render('ssti', { data: req.query.name});
   //console.log(out)
   //console.log(req.query.name)
