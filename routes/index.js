@@ -4,7 +4,11 @@ var router = express.Router();
 /* GET home page. */
 router.get('/', function(req, res, next) {
   if(req.session.key){
+    if(req.session.role === "admin"){
+      res.redirect('welcomeAdmin')
+    }else{
     res.redirect('welcome')
+    }
   }
   else{
     res.render('login', {});
@@ -13,7 +17,11 @@ router.get('/', function(req, res, next) {
 
 router.get('/login', function(req, res, next){
   if(req.session.key){
+    if(req.session.role === "admin"){
+      res.redirect('welcomeAdmin')
+    }else{
     res.redirect('welcome')
+    }
   }
   else{
     res.render('login', {})
@@ -31,8 +39,13 @@ router.post('/loginuser', function(req,res,next){
     if (err) throw err;
     else{
       if (result != null){
-        req.session.key=username;     
+        req.session.key=username;
+        if (username === "admin"){
+          req.session.role = "admin"
+          res.redirect('welcomeAdmin')
+        }else{
         res.redirect('welcome')
+        }
       }
       else{
         res.redirect('login')
@@ -54,7 +67,24 @@ router.get('/logout', function(req,res,next){
 
 router.get('/welcome', function(req,res,next){
   if(req.session.key){
-    res.render('welcome', {username: req.session.key})
+    if(req.session.role === "admin"){
+      res.redirect('welcomeAdmin')
+    }else{
+      res.render('welcome', {username: req.session.key})
+    }
+  } 
+  else{
+    res.redirect('login')
+  }
+});
+
+router.get('/welcomeAdmin', function(req,res,next){
+  if(req.session.key){
+    if(req.session.role === "admin"){
+      res.render('welcomeAdmin')
+    }else{
+      res.render('welcome', {username: req.session.key})
+    }
   } 
   else{
     res.redirect('login')
@@ -91,6 +121,15 @@ router.get('/search', function(req,res,next){
 router.post('/search', function(req,res,next){
   if(req.session.key){
     res.redirect('/search?searchquery='+req.body.searchquery)
+  }
+  else{
+    res.redirect('login')
+  }
+});
+
+router.get('/listusers', function(req,res,next){
+  if(req.session.key && req.session.role==="admin"){
+    res.render('listusers')
   }
   else{
     res.redirect('login')
