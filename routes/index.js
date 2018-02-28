@@ -47,7 +47,7 @@ router.post('/loginuser', function(req,res,next){
         res.redirect('welcome')
       }
       else{
-        res.redirect('login')
+        res.redirect('users')
       }
     }
   });
@@ -75,26 +75,21 @@ router.get('/welcome', function(req,res,next){
 });
 
 router.get('/register', function(req, res, next) {
-  //var out  = render('ssti', { data: req.query.name});
-  //console.log(out)
-  //console.log(req.query.name)
-  res.render('register');
-  //res.render('register', { data: req.query.name});
-  var db = req.db;
-  //var data = db.get('test');
-  //var userName = req.query.name;
-  //var password = req.query.pw;
-  var userName = req.body.name;
-  var password = req.body.pw;
-  console.log(userName);
-  //data.insert({"name" : userName}, function(err, doc){
-  //  db.close();
-  //  if (err) throw err;
-  //  else{
-  //    res.redirect('dbget')
-  //  }
-  //});
-  db.close();
+	res.render('register');
+});
+
+router.post('/addUser', function(req, res, next) {
+	var db = req.db;
+	var collection = db.get('users');
+	var userName = req.body.name;
+	var password = req.body.password;
+	collection.insert({"username" : userName, "password" : password}, function(err, doc){
+		db.close();
+		if (err) throw err;
+		else{
+      			res.redirect('login');
+   		 }
+	});
 });
 
 module.exports = router;
