@@ -83,7 +83,7 @@ router.get('/welcomeAdmin', function(req,res,next){
     if(req.session.role === "admin"){
       res.render('welcomeAdmin')
     }else{
-      res.render('welcome', {username: req.session.key})
+      res.redirect('welcome')
     }
   } 
   else{
