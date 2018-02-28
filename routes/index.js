@@ -8,7 +8,7 @@ router.get('/', function(req, res, next) {
 
 router.get('/dbinsert', function(req,res,next){
   var db = req.db;
-  var data = db.get('test');
+  var data = db.get('users');
   var userName = req.query.name;
   data.insert({"name" : userName}, function(err, doc){
     db.close();
