@@ -44,7 +44,7 @@ router.post('/loginuser', function(req,res,next){
           req.session.role = "admin"
           res.redirect('welcomeAdmin')
         }else{
-        res.redirect('welcome')
+          res.redirect('welcome')
         }
       }
       else{
@@ -128,8 +128,15 @@ router.post('/search', function(req,res,next){
 });
 
 router.get('/listusers', function(req,res,next){
-  if(req.session.key && req.session.role==="admin"){
-    res.render('listusers')
+ if(req.session.key && req.session.role==="admin"){
+    var db = req.db;
+    var data = db.get('users');
+
+    data.find({}, {}, function(err, result){
+      console.log(result)
+      res.render('listusers', { "result": result});
+    });
+
   }
   else{
     res.redirect('login')

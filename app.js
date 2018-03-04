@@ -12,11 +12,10 @@ var users = require('./routes/users');
 var mongo = require('mongodb')
 var monk = require('monk')
 var db = monk('localhost:27017/xss')
+
 //Sessions
-var redis = require("redis")
-var client = redis.createClient();
 var session = require('express-session')
-var redisStore = require('connect-redis')(session);
+var MongoStore = require('connect-mongo')(session);
 
 var app = express();
 
@@ -40,7 +39,7 @@ app.use(function(req,res,next){
 //session handling
 app.use(session({
   secret: "hax",
-  store: new redisStore({host: 'localhost', port: 6379, client: client, ttl : 260}),
+  store: new MongoStore({url: 'mongodb://localhost/xss', ttl : 260}),
   resave: false,
   saveUninitialized: false
 }));

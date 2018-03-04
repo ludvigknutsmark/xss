@@ -1,4 +1,8 @@
 extends layout
 
 block content
-    h1 YAY YOU'RE ADMIN
+    h1 USERLIST
+    ul
+        for res, i in result
+            li
+                p !{res.username}
