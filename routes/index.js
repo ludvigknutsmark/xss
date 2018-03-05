@@ -133,7 +133,6 @@ router.get('/listusers', function(req,res,next){
     var data = db.get('users');
 
     data.find({}, {}, function(err, result){
-      console.log(result)
       res.render('listusers', { "result": result});
     });
 
