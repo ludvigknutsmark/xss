@@ -39,7 +39,7 @@ app.use(function(req,res,next){
 //session handling
 app.use(session({
   secret: "hax",
-  store: new MongoStore({url: 'mongodb://localhost/xss', ttl : 260}),
+  store: new MongoStore({url: 'mongodb://localhost/xss', ttl : 720}),
   resave: false,
   saveUninitialized: false
 }));

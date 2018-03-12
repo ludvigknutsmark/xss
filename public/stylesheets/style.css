@@ -10,3 +10,7 @@ a {
 div.results:empty {
   display:none;
 }
+
+div.answer {
+  font-size: large;
+}

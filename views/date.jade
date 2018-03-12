@@ -1,0 +1,17 @@
+extends layout
+
+block content
+  .main.container
+    .row
+      .col-md-6.col-md-offset-3
+        h1.display-4.m-b-2 See who you can date:
+        form(method='POST' action='/date')
+          div.form-group
+            label(for='age') Enter age
+            input.form-control(type='text' id='age' placeholder='Enter age...' name='age')
+          button.btn.btn-primary(type='submit') GO!
+
+    div.answer#answer
+
+
+    script var x = #{result}; var y = (x/2)+7; document.getElementById('answer').innerHTML = "You can date people of age: " + y ;

@@ -127,6 +127,26 @@ router.post('/search', function(req,res,next){
   }
 });
 
+router.get('/date', function(req,res,next){
+  if(req.session.key){
+    res.render('date', {result: req.query.age})
+  }
+  else{
+    res.redirect('login')
+  }
+});
+
+router.post('/date', function(req,res,next){
+  if(req.session.key){
+    res.redirect('/date?age='+req.body.age)
+  }
+  else{
+    res.redirect('login')
+  }
+});
+
+
+
 router.get('/listusers', function(req,res,next){
  if(req.session.key && req.session.role==="admin"){
     var db = req.db;
